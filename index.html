@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosko Retro-Androide // VentaniYA 1001 // BILLETERA & CONTADOR</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --panel-bg: #121826;
+            --neon-green: #00ffcc;
+            --neon-amber: #ffb703;
+            --text-main: #e0fbfc;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: var(--neon-green);
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+            margin-bottom: 5px;
+        }
+        .marca-sub {
+            color: var(--neon-amber);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        /* ESTILO DEL RELOJ / CONTADOR DIGITAL DE USUARIOS */
+        .contador-panel {
+            background: #05070d;
+            border: 2px solid var(--neon-amber);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 15px rgba(255, 183, 3, 0.2);
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .reloj-bloque {
+            text-align: center;
+        }
+        .reloj-titulo {
+            font-size: 0.75rem;
+            color: var(--neon-amber);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .reloj-digitos {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--neon-green);
+            text-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
+            background: #0b0f19;
+            padding: 5px 12px;
+            border-radius: 4px;
+            border: 1px solid #1a233a;
+            letter-spacing: 3px;
+        }
+
+        .kiosko-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-green);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+            text-align: left;
+        }
+        .panel-seccion {
+            border: 1px dashed var(--neon-amber);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            background: rgba(255, 183, 3, 0.03);
+        }
+        .form-grupo {
+            margin-bottom: 12px;
+        }
+        .form-grupo label {
+            display: block;
+            color: var(--neon-amber);
+            font-weight: bold;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+        .form-grupo input, .form-grupo select {
+            width: 100%;
+            padding: 10px;
+            background: #0b0f19;
+            border: 1px solid var(--neon-green);
+            color: var(--text-main);
+            font-family: inherit;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .botones-maquina {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        button {
+            background: transparent;
+            border: 2px solid;
+            padding: 10px 18px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .btn-accion {
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+        .btn-accion:hover {
+            background: var(--neon-green);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--neon-green);
+        }
+        .btn-alerta {
+            border-color: #ff3366;
+            color: #ff3366;
+        }
+        .btn-alerta:hover {
+            background: #ff3366;
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px #ff3366;
+        }
+        .display-billetera {
+            background: #060911;
+            border: 2px solid var(--neon-green);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .resaltar-credito {
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+        .resaltar-deuda {
+            color: #ff3366;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PANEL DE RELOJ DIGITAL Y CONTADOR DE USUARIOS EN VIVO -->
+    <div style="max-width: 850px; margin: 0 auto;">
+        <div class="contador-panel">
+            <div class="reloj-bloque">
+                <div class="reloj-titulo">[ TRIPULANTES EN LINEA ]</div>
+                <div id="contadorUsuarios" class="reloj-digitos">1,428</div>
+            </div>
+            <div class="reloj-bloque">
+                <div class="reloj-titulo">[ HORA ESTELAR ]</div>
+                <div id="relojDigital" class="reloj-digitos">00:00:00</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="kiosko-container">
+        <h1 style="text-align: center;">COSMIC-SAT // BILLETERA PUENTE</h1>
+        <div class="marca-sub" style="text-align: center;">[ VENTANIYA 1001 // GESTION DE CREDITOS Y TIEMPO ]</div>
+        <p style="text-align: center;">Terminal descentralizada para control de saldos y contratos publicitarios.</p>
+
+        <div class="panel-seccion">
+            <h3 style="color: var(--neon-green); margin-top: 0;">>> IDENTIDAD DEL TRIPULANTE / ANUNCIANTE</h3>
+            <div class="form-grupo">
+                <label for="idTripulante">Nombre o Alias de la Cuenta:</label>
+                <input type="text" id="idTripulante" placeholder="Ej: Comandante General / Taller Estelar">
+            </div>
+            <div class="form-grupo">
+                <label for="creditosIniciales">Créditos en Banco de Tiempo (Ingreso/Recarga):</label>
+                <input type="number" id="creditosIniciales" value="100" placeholder="100">
+            </div>
+            <div class="form-grupo">
+                <label for="deudaPendiente">Saldo Pendiente de Contratos Activos ($ / Créditos):</label>
+                <input type="text" id="deudaPendiente" placeholder="Ej: $25.000 (Abono parcial)">
+            </div>
+        </div>
+
+        <div class="botones-maquina">
+            <button class="btn-accion" onclick="inicializarBilletera()">[ ⚡ ACTIVAR BILLETERA PUENTE ]</button>
+            <button class="btn-alerta" onclick="exportarCredenciales()">[ 💾 EXPORTAR CREDENCIAL .JSON ]</button>
+        </div>
+
+        <div id="resultadoBilletera" class="display-billetera" style="display: none;">
+            <!-- Acá se proyecta el estado de cuenta -->
+        </div>
+    </div>
+
+    <script>
+        // RELOJ DIGITAL Y CONTADOR EN VIVO
+        function actualizarRelojYContador() {
+            const ahora = new Date();
+            const horas = String(ahora.getHours()).padStart(2, '0');
+            const minutos = String(ahora.getMinutes()).padStart(2, '0');
+            const segundos = String(ahora.getSeconds()).padStart(2, '0');
+            document.getElementById('relojDigital').innerText = `${horas}:${minutos}:${segundos}`;
+
+            // Simulación dinámica y sutil de usuarios conectados (oscila orgánicamente)
+            let baseUsuarios = 1420;
+            let variacion = Math.floor(Math.sin(ahora.getTime() / 5000) * 15);
+            let totalConectados = baseUsuarios + variacion;
+            document.getElementById('contadorUsuarios').innerText = totalConectados.toLocaleString();
+        }
+
+        setInterval(actualizarRelojYContador, 1000);
+        actualizarRelojYContador();
+
+        let datosBilletera = {};
+
+        function generarHashWallet() {
+            const chars = "ABCDEF0123456789";
+            let hash = "BRIDGE-0x";
+            for(let i=0; i<24; i++) {
+                hash += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return hash + "-SAT";
+        }
+
+        function inicializarBilletera() {
+            const titular = document.getElementById('idTripulante').value.trim();
+            if (!titular) {
+                alert("¡Atención Comandante! Ingrese el nombre o alias de la cuenta.");
+                return;
+            }
+
+            const creditos = parseFloat(document.getElementById('creditosIniciales').value) || 0;
+            const deuda = document.getElementById('deudaPendiente').value.trim() || "Sin deudas pendientes";
+            const ahora = new Date();
+            const fechaStr = ahora.toISOString().split('T')[0];
+            const horaStr = ahora.toTimeString().split(' ')[0];
+            const hashWallet = generarHashWallet();
+
+            datosBilletera = {
+                version: "VentaniYA-Bridge-1.0",
+                hashId: hashWallet,
+                titular: titular.toUpperCase(),
+                creditosBancoTiempo: creditos,
+                estadoDeuda: deuda.toUpperCase(),
+                fechaCreacion: `${fechaStr} [${horaStr}]`,
+                nodoBase: "ESTACION PUBLICA 1001-SAT"
+            };
+
+            const contenedor = document.getElementById('resultadoBilletera');
+            contenedor.style.display = 'block';
+            contenedor.innerHTML = `
+                <span style="color: var(--neon-amber);">> ESTADO DE CUENTA SINCRONIZADO EN RED</span><br><br>
+                <strong>HASH PUENTE:</strong> <span style="color: #fff;">${datosBilletera.hashId}</span><br>
+                <strong>TITULAR:</strong> <span style="color: #fff;">${datosBilletera.titular}</span><br>
+                <strong>CREDITOS ACTIVOS:</strong> <span class="resaltar-credito">${datosBilletera.creditosBancoTiempo} CR</span><br>
+                <strong>SALDO / DEUDA:</strong> <span class="resaltar-deuda">${datosBilletera.estadoDeuda}</span><br>
+                <strong>FECHA DE SINCRONIZACION:</strong> ${datosBilletera.fechaCreacion}<br>
+                <strong>NODO:</strong> ${datosBilletera.nodoBase}
+            `;
+        }
+
+        function exportarCredenciales() {
+            if (!datosBilletera.hashId) {
+                alert("¡Primero debe activar y sincronizar la billetera puente!");
+                return;
+            }
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(datosBilletera, null, 4));
+            const nodoDescarga = document.createElement('a');
+            nodoDescarga.setAttribute("href", dataStr);
+            nodoDescarga.setAttribute("download", `billetera-puente-${datosBilletera.titular.toLowerCase().replace(/\s+/g, '-')}.json`);
+            document.body.appendChild(nodoDescarga);
+            nodoDescarga.click();
+            nodoDescarga.remove();
+        }
+    </script>
+</body>
+</html>
